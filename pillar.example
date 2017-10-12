@@ -1,0 +1,22 @@
+strongswan:
+  connections:
+    myvpn:
+        type: 'tunnel'
+        authby: 'secret'
+        auto: 'start'
+        pfs: 'yes'
+        ike: 'aes256-sha2_256;modp1024!'
+        phase2alg: 'aes256-sha2_256;modp1024'
+        aggrmode: 'no'
+
+        left: '1.2.3.4'
+        right: '4.3.2.1'
+        leftsubnet: '192.168.1.0/24'
+        rightsubnets: '{192.168.2.0/24}'
+
+        keyexchange: 'ike'
+        phase2: 'esp'
+        keylife: '43200s'
+        ikelifetime: '28800s'
+  secrets:
+    - '%any %any : PSK "TOPSECRETKEYHERE"'

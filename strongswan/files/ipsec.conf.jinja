@@ -1,0 +1,24 @@
+{%- set connections = salt['pillar.get']('strongswan:connections', {}) %}
+# /etc/ipsec.conf - Openswan IPsec configuration file
+
+# This file:  /usr/share/doc/openswan/ipsec.conf-sample
+#
+# Manual:     ipsec.conf.5
+
+version 2.0     # conforms to second version of ipsec.conf specification
+
+# basic configuration
+config setup
+  dumpdir=/var/run/pluto/
+  nat_traversal=yes
+  virtual_private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12,%v4:25.0.0.0/8,%v4:!10.23.30.0/24,%v6:fd00::/8,%v6:fe80::/10
+  oe=off
+  protostack=auto
+
+# Connections
+{%- for conn_name, conn_details in connections.iteritems() %}
+conn {{ conn_name }}
+  {%- for key, value in conn_details.iteritems() %}
+  {{ key }}={{ value }}
+  {%- endfor %}
+{%- endfor %}
