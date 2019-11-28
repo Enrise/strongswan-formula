@@ -6,9 +6,9 @@
 version 2.0     # conforms to second version of ipsec.conf specification
 
 # Connections
-{%- for conn_name, conn_details in connections.iteritems() %}
+{%- for conn_name, conn_details in connections.items() %}
 conn {{ conn_name }}
-  {%- for key, value in conn_details.iteritems() %}
+  {%- for key, value in conn_details.items() %}
   {{ key }}={{ value }}
   {%- endfor %}
 {%- endfor %}
